@@ -30,9 +30,10 @@ public class ClientController {
 
     @RequestMapping("clients/{id}")
     public ClientDTO getClientById(@PathVariable Long id){
+        /*
         Optional<Client> clientOptional = clientRepository.findById(id);
         return new ClientDTO(clientOptional.get());
-        //Luego probar con .orElse(null)
-        //return clientRepository.findById(id).orElse(null);
+         */
+        return new ClientDTO(clientRepository.findById(id).orElse(null));
     }
 }
