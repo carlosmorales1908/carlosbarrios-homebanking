@@ -17,6 +17,8 @@ public class Client {
     private String email;
     @OneToMany(mappedBy="clientId", fetch=FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
+    @OneToMany(mappedBy = "client")
+    private Set<ClientLoan> clientLoans = new HashSet<>();
 
     public Client() { }
 
@@ -65,5 +67,18 @@ public class Client {
     public void addAccount(Account account) {
         account.setClientId(this);
         accounts.add(account);
+    }
+
+    public Set<ClientLoan> getLoans() {
+        return clientLoans;
+    }
+
+    public void setClientLoans(Set<ClientLoan> clientLoans) {
+        this.clientLoans = clientLoans;
+    }
+
+    public void addLoan(ClientLoan clientLoan) {
+        clientLoan.setClient(this);
+        clientLoans.add(clientLoan);
     }
 }
