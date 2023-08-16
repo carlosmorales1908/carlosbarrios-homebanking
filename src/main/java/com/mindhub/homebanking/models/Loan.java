@@ -25,7 +25,6 @@ public class Loan {
     public Loan() {
     }
 
-    //Llamarlo con List.of(12,24);
     public Loan(String name, Double maxAmount, List<Integer> payments) {
         this.name = name;
         this.maxAmount = maxAmount;

@@ -24,7 +24,8 @@ public class HomebankingApplication {
 									  AccountRepository accountRepository,
 									  TransactionRepository transactionRepository,
 									  LoanRepository loanRepository,
-									  ClientLoanRepository clientLoanRepository
+									  ClientLoanRepository clientLoanRepository,
+									  CardRepository cardRepository
 									){
 		return (args) -> {
 			/*CREACION DE LOS PRESTAMOS*/
@@ -71,6 +72,37 @@ public class HomebankingApplication {
 			clientLoanRepository.save(clientLoan);
 
 
+			//CREACION DE LA CARD DE DEBITO GOLD
+			Card card1Melba = new Card(melba.getFirstName()+" "+melba.getLastName(),
+										CardType.DEBIT,
+										CardColor.GOLD,
+										"3214-6547-9877-6541",
+										321,
+										LocalDate.now(),
+					LocalDate.now().plusYears(5)
+			);
+			melba.addCard(card1Melba);
+			cardRepository.save(card1Melba);
+			clientRepository.save(melba);
+
+			//CREACION DE LA CARD DE CREDITO TITANIUM
+			Card card2Melba = new Card(melba.getFirstName()+" "+melba.getLastName(),
+					CardType.CREDIT,
+					CardColor.TITANIUM,
+					"3287-6287-1871-6742",
+					987,
+					LocalDate.now(),
+					LocalDate.now().plusYears(5)
+			);
+			melba.addCard(card2Melba);
+			cardRepository.save(card2Melba);
+			clientRepository.save(melba);
+
+
+
+
+			//****************************** SEGUNDO CLIENTE ********************************************************************************
+
 			/*CREACION DEL CLIENTE CARLOS*/
 			Client carlos = new Client("Carlos", "Morales","carlosm@gmail.com");
 			clientRepository.save(carlos);
@@ -107,7 +139,18 @@ public class HomebankingApplication {
 			clientLoan = new ClientLoan(200000.0,36,carlos,prestamoAutomotriz);
 			clientLoanRepository.save(clientLoan);
 
-
+			//CREACION DE LA CARD DE CREDITO SILVER
+			Card card1Carlos = new Card(carlos.getFirstName()+" "+carlos.getLastName(),
+					CardType.CREDIT,
+					CardColor.SILVER,
+					"9875-7766-4242-1230",
+					654,
+					LocalDate.now(),
+					LocalDate.now().plusYears(5)
+			);
+			carlos.addCard(card1Carlos);
+			cardRepository.save(card1Carlos);
+			clientRepository.save(carlos);
 
 		};
 	}
