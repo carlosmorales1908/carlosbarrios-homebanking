@@ -21,8 +21,8 @@ createApp({
                     this.errorToats.show();
                 })
         },
-        formatDate(date) {
-            return new Date(date).toLocaleDateString('en-gb');
+        formatDate(creationDate) {
+            return new Date(creationDate).toLocaleDateString('es-es');
         }
     },
     mounted() {
