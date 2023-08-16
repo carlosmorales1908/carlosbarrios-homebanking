@@ -32,31 +32,15 @@ public class AccountDTO {
         return number;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     public LocalDate getCreationDate() {
         return creationDate;
-    }
-
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
     }
 
     public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
-
     public Set<TransactionDTO> getTransactions() {
         return transactions;
-    }
-
-    public void setTransactions(Set<TransactionDTO> transactions) {
-        this.transactions = transactions;
     }
 }

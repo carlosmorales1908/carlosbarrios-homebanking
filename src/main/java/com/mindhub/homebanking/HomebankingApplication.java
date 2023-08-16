@@ -44,12 +44,12 @@ public class HomebankingApplication {
 			/*CREACION DE CUENTA DE MELBA*/
 			Account melbaAccount1 = new Account("VIN001", LocalDate.now(),5300.0);
 			melba.addAccount(melbaAccount1);
-			Transaction transaction = new Transaction(TransactionType.CREDITO,300.0,"Deposito por transferencia",LocalDate.now());
+			Transaction transaction = new Transaction(TransactionType.CREDIT,300.0,"Deposito por transferencia",LocalDate.now());
 			melbaAccount1.addTransaction(transaction);
 			accountRepository.save(melbaAccount1);
 			transactionRepository.save(transaction);
 
-			transaction = new Transaction(TransactionType.DEBITO,-200.0,"Compras varias",LocalDate.now());
+			transaction = new Transaction(TransactionType.DEBIT,-200.0,"Compras varias",LocalDate.now());
 			melbaAccount1.addTransaction(transaction);
 			transactionRepository.save(transaction);
 			accountRepository.save(melbaAccount1);
@@ -60,7 +60,7 @@ public class HomebankingApplication {
 			accountRepository.save(melbaAccount2);
 
 			/*TRANSACCION DE LA CUENTA DE MELBA "VIN002"*/
-			transaction = new Transaction(TransactionType.CREDITO,1000.0,"Deposito por transferencia",LocalDate.now());
+			transaction = new Transaction(TransactionType.CREDIT,1000.0,"Deposito por transferencia",LocalDate.now());
 			melbaAccount2.addTransaction(transaction);
 			transactionRepository.save(transaction);
 
@@ -112,7 +112,7 @@ public class HomebankingApplication {
 			accountRepository.save(carlosAccount1);
 
 
-			transaction = new Transaction(TransactionType.CREDITO,1000.0,"Deposito por transferencia",LocalDate.now());
+			transaction = new Transaction(TransactionType.CREDIT,1000.0,"Deposito por transferencia",LocalDate.now());
 			carlosAccount1.addTransaction(transaction);
 			transactionRepository.save(transaction);
 
@@ -120,7 +120,7 @@ public class HomebankingApplication {
 			carlos.addAccount(carlosAccount2);
 			accountRepository.save(carlosAccount2);
 
-			transaction = new Transaction(TransactionType.CREDITO,100.0,"Deposito por transferencia",LocalDate.now());
+			transaction = new Transaction(TransactionType.CREDIT,100.0,"Deposito por transferencia",LocalDate.now());
 			carlosAccount2.addTransaction(transaction);
 			transactionRepository.save(transaction);
 
@@ -128,7 +128,7 @@ public class HomebankingApplication {
 			carlos.addAccount(carlosAccount3);
 			accountRepository.save(carlosAccount3);
 
-			transaction = new Transaction(TransactionType.CREDITO,10000.0,"Deposito por transferencia",LocalDate.now());
+			transaction = new Transaction(TransactionType.CREDIT,10000.0,"Deposito por transferencia",LocalDate.now());
 			carlosAccount3.addTransaction(transaction);
 			transactionRepository.save(transaction);
 
