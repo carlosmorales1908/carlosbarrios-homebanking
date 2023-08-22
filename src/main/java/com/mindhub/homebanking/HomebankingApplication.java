@@ -2,16 +2,20 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
+	@Autowired
+	private PasswordEncoder passwordEnconder;
 
 	public static void main(String[] args) {
 
@@ -38,7 +42,8 @@ public class HomebankingApplication {
 
 
 			/*CREACION DEL CLIENTE MELBA*/
-			Client melba = new Client("Melba","Morel","melba.morel@gmail.com");
+
+			Client melba = new Client("Melba","Morel","melba.morel@gmail.com",passwordEnconder.encode("1234"));
 			clientRepository.save(melba);
 
 			/*CREACION DE CUENTA DE MELBA*/
@@ -108,7 +113,7 @@ public class HomebankingApplication {
 			//****************************** SEGUNDO CLIENTE ********************************************************************************
 
 			/*CREACION DEL CLIENTE CARLOS*/
-			Client carlos = new Client("Carlos", "Morales","carlosm@gmail.com");
+			Client carlos = new Client("Carlos", "Morales","carlosm@gmail.com","4321");
 			clientRepository.save(carlos);
 			/*CREACION DE LA CUENTA DE CARLOS "WTN001"*/
 			Account carlosAccount1 = new Account("WTN001", LocalDate.now(),300.0);
