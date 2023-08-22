@@ -65,10 +65,14 @@ public class HomebankingApplication {
 			transactionRepository.save(transaction);
 
 			//Préstamo Hipotecario, 400.000, 60 cuotas.
-			ClientLoan clientLoan = new ClientLoan(400000.0,60,melba,prestamoHipotecario);
+			ClientLoan clientLoan = new ClientLoan(400000.0,60);
+			clientLoan.setClient(melba);
+			clientLoan.setLoan(prestamoHipotecario);
 			clientLoanRepository.save(clientLoan);
 			//Préstamo Personal, 50.000, 12 cuotas
-			clientLoan = new ClientLoan(50000.0,12,melba,prestamoPersonal);
+			clientLoan = new ClientLoan(50000.0,12);
+			clientLoan.setClient(melba);
+			clientLoan.setLoan(prestamoPersonal);
 			clientLoanRepository.save(clientLoan);
 
 
@@ -133,10 +137,14 @@ public class HomebankingApplication {
 			transactionRepository.save(transaction);
 
 			//Préstamo Personal, 100.000, 24 cuotas
-			clientLoan = new ClientLoan(100000.0,24,carlos,prestamoPersonal);
+			clientLoan = new ClientLoan(100000.0,24);
+			clientLoan.setClient(carlos);
+			clientLoan.setLoan(prestamoPersonal);
 			clientLoanRepository.save(clientLoan);
 			//Préstamo Automotriz, 200.000, 36 cuotas
-			clientLoan = new ClientLoan(200000.0,36,carlos,prestamoAutomotriz);
+			clientLoan = new ClientLoan(200000.0,36);
+			clientLoan.setClient(carlos);
+			clientLoan.setLoan(prestamoAutomotriz);
 			clientLoanRepository.save(clientLoan);
 
 			//CREACION DE LA CARD DE CREDITO SILVER
