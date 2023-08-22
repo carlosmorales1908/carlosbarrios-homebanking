@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.models;
 
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.HashSet;
@@ -32,7 +33,7 @@ public class Client {
         this.password = password;
     }
 
-    public long getId_client() {
+    public long getIdclient() {
         return id;
     }
 

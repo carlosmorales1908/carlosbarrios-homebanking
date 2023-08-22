@@ -1,11 +1,7 @@
 package com.mindhub.homebanking.dtos;
 
-
-import com.mindhub.homebanking.models.Card;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.models.ClientLoan;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,7 +16,7 @@ public class ClientDTO {
 
 
     public ClientDTO(Client client) {
-        this.id = client.getId_client();
+        this.id = client.getIdclient();
         this.firstName = client.getFirstName();
         this.lastName = client.getLastName();
         this.email = client.getEmail();

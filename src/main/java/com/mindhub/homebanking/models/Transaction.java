@@ -1,6 +1,6 @@
 package com.mindhub.homebanking.models;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;

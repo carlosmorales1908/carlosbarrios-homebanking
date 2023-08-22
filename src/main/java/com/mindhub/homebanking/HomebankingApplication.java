@@ -113,7 +113,7 @@ public class HomebankingApplication {
 			//****************************** SEGUNDO CLIENTE ********************************************************************************
 
 			/*CREACION DEL CLIENTE CARLOS*/
-			Client carlos = new Client("Carlos", "Morales","carlosm@gmail.com","4321");
+			Client carlos = new Client("Carlos", "Morales","carlosm@gmail.com",passwordEnconder.encode("4321"));
 			clientRepository.save(carlos);
 			/*CREACION DE LA CUENTA DE CARLOS "WTN001"*/
 			Account carlosAccount1 = new Account("WTN001", LocalDate.now(),300.0);
