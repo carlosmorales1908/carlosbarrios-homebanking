@@ -39,6 +39,7 @@ public class HomebankingApplication {
 			loanRepository.save(prestamoPersonal);
 			Loan prestamoAutomotriz = new Loan("Automotriz",300000.0, List.of(6,12,24,36));
 			loanRepository.save(prestamoAutomotriz);
+			Transaction transaction;
 
 
 			/*CREACION DEL CLIENTE MELBA*/
@@ -47,6 +48,7 @@ public class HomebankingApplication {
 			clientRepository.save(melba);
 
 			/*CREACION DE CUENTA DE MELBA*/
+			/*
 			Account melbaAccount1 = new Account("VIN001", LocalDate.now(),5300.0);
 			melba.addAccount(melbaAccount1);
 			Transaction transaction = new Transaction(TransactionType.CREDIT,300.0,"Deposito por transferencia",LocalDate.now());
@@ -58,16 +60,19 @@ public class HomebankingApplication {
 			melbaAccount1.addTransaction(transaction);
 			transactionRepository.save(transaction);
 			accountRepository.save(melbaAccount1);
-
+			*/
 			/*CREACION DE LA 2DA CUENTA DE MELBA*/
+			/*
 			Account melbaAccount2 = new Account("VIN002", LocalDate.now().plusDays(1),7500.0);
 			melba.addAccount(melbaAccount2);
 			accountRepository.save(melbaAccount2);
 
-			/*TRANSACCION DE LA CUENTA DE MELBA "VIN002"*/
+
 			transaction = new Transaction(TransactionType.CREDIT,1000.0,"Deposito por transferencia",LocalDate.now());
 			melbaAccount2.addTransaction(transaction);
 			transactionRepository.save(transaction);
+			*/
+
 
 			//Préstamo Hipotecario, 400.000, 60 cuotas.
 			ClientLoan clientLoan = new ClientLoan(400000.0,60);
