@@ -56,11 +56,11 @@ public class ClientController {
         while(accountRepository.findByNumber(number+"")!=null){
             number = getAccountRandomNumber();
         }
-        Account account = new Account("VIN-"+number, LocalDate.now(),0.0);
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
+        clientRepository.save(client);
+        Account account = new Account("VIN-"+number, LocalDate.now(),0.0);
         client.addAccount(account);
         accountRepository.save(account);
-        clientRepository.save(client);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
