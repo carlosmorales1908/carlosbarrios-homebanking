@@ -58,7 +58,7 @@ public class CardController {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         //El cliente no esta autenticado
-        return new ResponseEntity<>("No se encontro el cliente.", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Customer not found.", HttpStatus.NOT_FOUND);
     }
 
 

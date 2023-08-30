@@ -38,6 +38,13 @@ public class AccountController {
         return new AccountDTO(accountRepository.findById(id).orElse(null));
     }
 
+    @GetMapping("/clients/current/accounts")
+    public List<AccountDTO> getCurrentClientAccounts(Authentication authentication){
+        Client client = clientRepository.findByEmail(authentication.getName());
+        return client.getAccounts().stream()
+                .map(currentAccount -> new AccountDTO(currentAccount))
+                .collect(Collectors.toList());
+    }
 
 
     @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)

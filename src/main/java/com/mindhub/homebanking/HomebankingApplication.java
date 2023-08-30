@@ -48,9 +48,11 @@ public class HomebankingApplication {
 			clientRepository.save(melba);
 
 			/*CREACION DE CUENTA DE MELBA*/
-			/*
-			Account melbaAccount1 = new Account("VIN001", LocalDate.now(),5300.0);
+
+			Account melbaAccount1 = new Account("VIN-001", LocalDate.now(),5300.0);
 			melba.addAccount(melbaAccount1);
+			accountRepository.save(melbaAccount1);
+			/*
 			Transaction transaction = new Transaction(TransactionType.CREDIT,300.0,"Deposito por transferencia",LocalDate.now());
 			melbaAccount1.addTransaction(transaction);
 			accountRepository.save(melbaAccount1);
