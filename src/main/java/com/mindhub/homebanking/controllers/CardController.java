@@ -3,6 +3,7 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class CardController {
     @Autowired
     private CardRepository cardRepository;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
 
     @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
@@ -28,7 +29,7 @@ public class CardController {
             @RequestParam CardColor cardColor,
             @RequestParam CardType cardType,
             Authentication authentication) {
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.findByEmail(authentication.getName());
         if (client != null){
             //El cliente esta autenticado
             byte count = 0;

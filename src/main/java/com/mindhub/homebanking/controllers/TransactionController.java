@@ -8,6 +8,8 @@ import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +28,9 @@ public class TransactionController {
     @Autowired
     private TransactionRepository transactionRepository;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
 
 
     @Transactional
@@ -37,7 +39,7 @@ public class TransactionController {
             @RequestParam String fromAccountNumber, @RequestParam String toAccountNumber,
             @RequestParam Double amount, @RequestParam String description,
             Authentication authentication) {
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.findByEmail(authentication.getName());
         if (client != null) {
             //Verificar que los parámetros no estén vacíos
             if (amount <= 0 || description.isEmpty() || fromAccountNumber.isEmpty() || toAccountNumber.isEmpty()) {
@@ -54,13 +56,13 @@ public class TransactionController {
             }
 
             //Verificar que exista la cuenta de origen
-            Account sourceAccount = accountRepository.findByNumber(fromAccountNumber);
+            Account sourceAccount = accountService.findByNumber(fromAccountNumber);
             if (sourceAccount == null) {
                 return new ResponseEntity<>("The source account does not exist.", HttpStatus.NOT_FOUND);
             }
 
             //Verificar que exista la cuenta de destino
-            Account targetAccount = accountRepository.findByNumber(toAccountNumber);
+            Account targetAccount = accountService.findByNumber(toAccountNumber);
             if (targetAccount == null) {
                 return new ResponseEntity<>("The target account does not exist.", HttpStatus.NOT_FOUND);
             }

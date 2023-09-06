@@ -6,6 +6,8 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,28 +21,26 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api")
 public class AccountController {
+
     @Autowired
-    private AccountRepository accountRepository;
+    private ClientService clientService;
     @Autowired
-    private ClientRepository clientRepository;
+    private AccountService accountService;
 
 
     @GetMapping("/accounts")
     public List<AccountDTO> getAccounts(){
-        return accountRepository.findAll()
-                .stream()
-                .map(currentAccount -> new AccountDTO(currentAccount))
-                .collect(Collectors.toList());
+        return accountService.getAccountsDTO();
     }
 
     @RequestMapping("accounts/{id}")
     public AccountDTO getAccountById(@PathVariable Long id){
-        return new AccountDTO(accountRepository.findById(id).orElse(null));
+        return accountService.getAccountDTO(id);
     }
 
     @GetMapping("/clients/current/accounts")
     public List<AccountDTO> getCurrentClientAccounts(Authentication authentication){
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.findByEmail(authentication.getName());
         return client.getAccounts().stream()
                 .map(currentAccount -> new AccountDTO(currentAccount))
                 .collect(Collectors.toList());
@@ -49,19 +49,19 @@ public class AccountController {
 
     @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
     public ResponseEntity<Object> createAccount(Authentication authentication) {
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.findByEmail(authentication.getName());
         if (client != null){
             //El cliente existe en la DB
             if(client.getAccounts().size() < 3 ){
                 //Se crea una cuenta
                 int number = getAccountRandomNumber();
-                while(accountRepository.findByNumber(number+"")!=null){
+                while(accountService.findByNumber(number+"")!=null){
                     number = getAccountRandomNumber();
                 }
                 Account account = new Account("VIN-"+number, LocalDate.now(),0.0);
                 System.out.println(account.getNumber());
                 client.addAccount(account);
-                accountRepository.save(account);
+                accountService.save(account);
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }
             //Ya tiene las 3 cuentas
