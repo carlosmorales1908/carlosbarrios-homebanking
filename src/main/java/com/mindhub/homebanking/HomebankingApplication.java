@@ -22,7 +22,7 @@ public class HomebankingApplication {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
 
-
+	/*
 	@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository,
 									  AccountRepository accountRepository,
@@ -33,6 +33,7 @@ public class HomebankingApplication {
 									){
 		return (args) -> {
 			/*CREACION DE LOS PRESTAMOS*/
+	/*
 			Loan prestamoHipotecario = new Loan("Hipotecario",500000.0, List.of(12,24,36,48,60));
 			loanRepository.save(prestamoHipotecario);
 			Loan prestamoPersonal = new Loan("Personal",100000.0, List.of(6,12,24));
@@ -40,15 +41,15 @@ public class HomebankingApplication {
 			Loan prestamoAutomotriz = new Loan("Automotriz",300000.0, List.of(6,12,24,36));
 			loanRepository.save(prestamoAutomotriz);
 			Transaction transaction;
-
+	*/
 
 			/*CREACION DEL CLIENTE MELBA*/
-
+	/*
 			Client melba = new Client("Melba","Morel","melba.morel@gmail.com",passwordEnconder.encode("1234"));
 			clientRepository.save(melba);
 
 			/*CREACION DE CUENTA DE MELBA*/
-
+	/*
 			Account melbaAccount1 = new Account("VIN-001", LocalDate.now(),5300.0);
 			melba.addAccount(melbaAccount1);
 			accountRepository.save(melbaAccount1);
@@ -77,6 +78,7 @@ public class HomebankingApplication {
 
 
 			//Préstamo Hipotecario, 400.000, 60 cuotas.
+	/*
 			ClientLoan clientLoan = new ClientLoan(400000.0,60);
 			clientLoan.setClient(melba);
 			clientLoan.setLoan(prestamoHipotecario);
@@ -120,9 +122,11 @@ public class HomebankingApplication {
 			//****************************** SEGUNDO CLIENTE ********************************************************************************
 
 			/*CREACION DEL CLIENTE CARLOS*/
+	/*
 			Client carlos = new Client("Carlos", "Morales","carlosm@gmail.com",passwordEnconder.encode("4321"));
 			clientRepository.save(carlos);
 			/*CREACION DE LA CUENTA DE CARLOS "WTN001"*/
+	/*
 			Account carlosAccount1 = new Account("WTN001", LocalDate.now(),300.0);
 			carlos.addAccount(carlosAccount1);
 			accountRepository.save(carlosAccount1);
@@ -173,5 +177,5 @@ public class HomebankingApplication {
 			clientRepository.save(carlos);
 
 		};
-	}
+	}*/
 }
