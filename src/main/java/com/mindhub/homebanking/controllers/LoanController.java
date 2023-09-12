@@ -5,9 +5,7 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.LoanApplicationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.*;
-import com.mindhub.homebanking.services.AccountService;
-import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -25,23 +22,21 @@ public class LoanController {
     @Autowired
     private ClientService clientService;
     @Autowired
-    private ClientLoanRepository clientLoanRepository;
+    private ClientLoanService clientLoanService;
     @Autowired
-    private LoanRepository loanRepository;
+    private LoanService loanService;
     @Autowired
     private AccountService accountService;
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionService transactionService;
+
 
 
 
 
     @GetMapping("/loans")
     public List<LoanDTO> getLoans(){
-        return loanRepository.findAll()
-                .stream()
-                .map(currentLoan -> new LoanDTO(currentLoan))
-                .collect(Collectors.toList());
+        return loanService.getLoansDTO();
     }
 
 
@@ -68,7 +63,7 @@ public class LoanController {
             }
 
             //Verificar que el préstamo exista
-            Loan loan = loanRepository.findById(loanApplicationDTO.getLoanId()).orElse(null);
+            Loan loan = loanService.findById(loanApplicationDTO.getLoanId());
             if(loan == null){
                 return new ResponseEntity<>("Loan not found", HttpStatus.NOT_FOUND);
             }
@@ -119,9 +114,9 @@ public class LoanController {
                     LocalDate.now());
             client.addLoan(clientLoan);
             loan.addClient(clientLoan);
-            clientLoanRepository.save(clientLoan);
+            clientLoanService.save(clientLoan);
             clientAccount.addTransaction(transaction);
-            transactionRepository.save(transaction);
+            transactionService.save(transaction);
             clientAccount.setBalance(clientAccount.getBalance()+loanAmount);
             accountService.save(clientAccount);
 

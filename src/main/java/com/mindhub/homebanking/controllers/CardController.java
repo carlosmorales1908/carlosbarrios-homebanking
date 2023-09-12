@@ -1,8 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.CardRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.CardService;
 import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,7 @@ import java.time.LocalDate;
 @RequestMapping("/api")
 public class CardController {
     @Autowired
-    private CardRepository cardRepository;
+    private CardService cardService;
     @Autowired
     private ClientService clientService;
 
@@ -43,7 +42,7 @@ public class CardController {
                 return new ResponseEntity<>("The client already has 3 "+cardType+" cards.", HttpStatus.FORBIDDEN);
             }
             String number = getCardRandomNumber();
-            while(cardRepository.findByNumber(number)!=null){
+            while(cardService.findByNumber(number)!=null){
                 number = getCardRandomNumber();
             }
             Card card = new Card(client.getFirstName()+" "+client.getLastName(),
@@ -55,7 +54,7 @@ public class CardController {
                     LocalDate.now().plusYears(5)
             );
             client.addCard(card);
-            cardRepository.save(card);
+            cardService.save(card);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         //El cliente no esta autenticado
