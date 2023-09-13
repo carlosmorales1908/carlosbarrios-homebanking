@@ -3,14 +3,12 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.services.CardService;
 import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.utils.CardUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
@@ -23,7 +21,7 @@ public class CardController {
     private ClientService clientService;
 
 
-    @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
+    @PostMapping("/clients/current/cards")
     public ResponseEntity<Object> createCard(
             @RequestParam CardColor cardColor,
             @RequestParam CardType cardType,
@@ -41,15 +39,15 @@ public class CardController {
                 //El cliente ya tiene las 3 tarjetas del mismo tipo
                 return new ResponseEntity<>("The client already has 3 "+cardType+" cards.", HttpStatus.FORBIDDEN);
             }
-            String number = getCardRandomNumber();
+            String number = CardUtils.getCardRandomNumber();
             while(cardService.findByNumber(number)!=null){
-                number = getCardRandomNumber();
+                number = CardUtils.getCardRandomNumber();
             }
             Card card = new Card(client.getFirstName()+" "+client.getLastName(),
                     cardType,
                     cardColor,
                     number,
-                    getRandomNumber(1,999),
+                    CardUtils.getRandomNumber(1,999),
                     LocalDate.now(),
                     LocalDate.now().plusYears(5)
             );
@@ -62,11 +60,7 @@ public class CardController {
     }
 
 
-    public int getRandomNumber(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
-    }
 
-    public String getCardRandomNumber() {
-        return getRandomNumber(1,9999)+"-"+getRandomNumber(1,9999)+"-"+getRandomNumber(1,9999)+"-"+getRandomNumber(1,9999);
-    }
+
+
 }

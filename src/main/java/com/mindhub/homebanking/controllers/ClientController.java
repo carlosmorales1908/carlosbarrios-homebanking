@@ -4,10 +4,9 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.utils.AccountUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,12 +34,12 @@ public class ClientController {
         return clientService.getClientsDTO();
     }
 
-    @RequestMapping("/clients/{id}")
+    @GetMapping("/clients/{id}")
     public ClientDTO getClientById(@PathVariable Long id){
         return clientService.getClientDTO(id);
     }
 
-    @RequestMapping(path = "/clients", method = RequestMethod.POST)
+    @PostMapping("/clients")
     public ResponseEntity<Object> register(
             @RequestParam String firstName, @RequestParam String lastName,
             @RequestParam String email, @RequestParam String password) {
@@ -52,9 +51,9 @@ public class ClientController {
         }
 
         //Se crea una cuenta para el cliente
-        int number = getAccountRandomNumber();
+        int number = AccountUtils.getAccountRandomNumber();
         while(accountService.findByNumber(number+"")!=null){
-            number = getAccountRandomNumber();
+            number = AccountUtils.getAccountRandomNumber();
         }
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
         clientService.save(client);
@@ -72,7 +71,5 @@ public class ClientController {
     }
 
 
-    private int getAccountRandomNumber() {
-        return (int) ((Math.random() * (99999999 - 1)) + 1);
-    }
+
 }

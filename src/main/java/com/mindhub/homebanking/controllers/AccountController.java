@@ -8,6 +8,7 @@ import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.utils.AccountUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class AccountController {
         return accountService.getAccountsDTO();
     }
 
-    @RequestMapping("accounts/{id}")
+    @GetMapping("accounts/{id}")
     public AccountDTO getAccountById(@PathVariable Long id){
         return accountService.getAccountDTO(id);
     }
@@ -47,16 +48,16 @@ public class AccountController {
     }
 
 
-    @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
+    @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> createAccount(Authentication authentication) {
         Client client = clientService.findByEmail(authentication.getName());
         if (client != null){
             //El cliente existe en la DB
             if(client.getAccounts().size() < 3 ){
                 //Se crea una cuenta
-                int number = getAccountRandomNumber();
+                int number = AccountUtils.getAccountRandomNumber();
                 while(accountService.findByNumber(number+"")!=null){
-                    number = getAccountRandomNumber();
+                    number = AccountUtils.getAccountRandomNumber();
                 }
                 Account account = new Account("VIN-"+number, LocalDate.now(),0.0);
                 System.out.println(account.getNumber());
@@ -71,7 +72,5 @@ public class AccountController {
         return new ResponseEntity<>("No se encontro el cliente.", HttpStatus.NOT_FOUND);
     }
 
-    private int getAccountRandomNumber() {
-        return (int) ((Math.random() * (99999999 - 1)) + 1);
-    }
+
 }
