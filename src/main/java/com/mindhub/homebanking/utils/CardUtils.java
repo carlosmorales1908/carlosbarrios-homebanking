@@ -8,6 +8,10 @@ public class CardUtils {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
+    public static int getCvvRandomNumber(){
+        return getRandomNumber(1,999);
+    }
+
     public static String getCardRandomNumber() {
         return getRandomNumber(1,9999)+"-"+getRandomNumber(1,9999)+"-"+getRandomNumber(1,9999)+"-"+getRandomNumber(1,9999);
     }

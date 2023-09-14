@@ -47,7 +47,7 @@ public class CardController {
                     cardType,
                     cardColor,
                     number,
-                    CardUtils.getRandomNumber(1,999),
+                    CardUtils.getCvvRandomNumber(),
                     LocalDate.now(),
                     LocalDate.now().plusYears(5)
             );
